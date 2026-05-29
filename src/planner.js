@@ -69,7 +69,7 @@ export async function runPlanner() {
       spinner.stop();
     }
 
-    const assistantText = response.content[0].text;
+    const assistantText = response.content.find(b => b.type === 'text')?.text ?? '';
     messages.push({ role: 'assistant', content: assistantText });
 
     console.log(chalk.green('\nClaude: ') + assistantText + '\n');
@@ -91,7 +91,7 @@ export async function runPlanner() {
           messages,
         });
         jsonSpinner.stop();
-        const jsonText = jsonResponse.content[0].text;
+        const jsonText = jsonResponse.content.find(b => b.type === 'text')?.text ?? '';
         messages.push({ role: 'assistant', content: jsonText });
         plan = tryExtractPlan(jsonText);
       }
