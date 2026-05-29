@@ -1,6 +1,6 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { promisify } from 'child_process';
+import { promisify } from 'util';
 import { exec } from 'child_process';
 import runSubagent from './subagent.js';
 import { createBranch, pushBranch, openPR, pollUntilMerged, checkoutMain } from './github.js';
