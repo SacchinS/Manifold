@@ -1,7 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk';
 import fs from 'fs';
 import path from 'path';
-import { execSync } from 'child_process';
+import { execSync, spawnSync } from 'child_process';
 
 const client = new Anthropic();
 
@@ -142,7 +142,7 @@ Complete this milestone by reading existing files for context, then writing the 
   // Stage and commit all changes
   try {
     execSync('git add -A', { cwd: repoPath });
-    execSync(`git commit -m "feat: ${milestone.title}"`, { cwd: repoPath });
+    spawnSync('git', ['commit', '-m', `feat: ${milestone.title}`], { cwd: repoPath, stdio: 'inherit' });
     console.log(`[subagent] Committed: feat: ${milestone.title}`);
   } catch (err) {
     console.log(`[subagent] Commit skipped (nothing to commit or error): ${err.message}`);
