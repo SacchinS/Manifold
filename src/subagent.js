@@ -66,7 +66,7 @@ function executeTool(toolName, toolInput, repoPath) {
     if (toolName === 'run_bash') {
       const result = execSync(toolInput.command, {
         cwd: repoPath,
-        timeout: 30000,
+        timeout: 120000,
         encoding: 'utf-8',
         stdio: ['pipe', 'pipe', 'pipe'],
       });
