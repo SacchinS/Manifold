@@ -27,7 +27,8 @@ function askTerminal(question) {
 }
 
 async function startDevServer(repoPath) {
-  const server = spawn('npm', ['start'], {
+  const cmdParts = (process.env.DEV_SERVER_COMMAND || 'npm run dev').split(' ');
+  const server = spawn(cmdParts[0], cmdParts.slice(1), {
     cwd: repoPath,
     stdio: 'pipe',
     detached: false,
@@ -73,7 +74,8 @@ export async function runOrchestrator(plan) {
         try {
           screenshotPath = path.join(REPO_PATH, 'screenshots', `milestone-${milestone.id}.png`);
           devServer = await startDevServer(REPO_PATH);
-          await takeScreenshot('http://localhost:3000', screenshotPath);
+          const port = process.env.DEV_SERVER_PORT || 3000;
+          await takeScreenshot(`http://localhost:${port}`, screenshotPath);
         } catch (err) {
           console.warn(`[orchestrator] Screenshot failed: ${err.message}`);
           screenshotPath = null;
